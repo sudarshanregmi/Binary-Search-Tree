@@ -1,22 +1,22 @@
 html, body {
   margin: 0;
   padding: 0;
-	background: rgb(180, 180, 180);
+	background: rgb(66, 160, 245);
+	/* background:#52D2BC; /* rgba(255, 255, 255, 0.4); */ */
 }
 canvas {
   display: block;
 	padding-left: 0;
-		bst.insert(64);
 	padding-right: 0;
 	margin-left: auto;
 	margin-right: auto;
 	display: block;
-	/* width: 800px; */
 }
 
 #heading{
 	font-weight: 200;
 	text-align: center;
+	color: white;
 }
 
 .button {
