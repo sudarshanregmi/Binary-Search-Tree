@@ -9,6 +9,7 @@
   </head>
   <body>
 		<h1 id="heading"><center>Binary Search Tree</center></h1>
+		<div id="snackbar"> Not found </div>
     <script src="./js/sketch.js"></script>
   </body>
 </html>

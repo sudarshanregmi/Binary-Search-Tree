@@ -4,6 +4,12 @@ var updated = false;
 var highlight = false;
 var tempNode;
 
+function showToast() {
+  var x = document.getElementById("snackbar");
+  x.className = "show";
+  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+}
+
 class Node{
   constructor(key){
     this.key = key;
@@ -20,7 +26,6 @@ class Node{
 class BST{
   constructor(){
     this.root = null;
-    console.log("Constructor called");
   }
   insert(key, node=this.root){
     if(this.root == null){
@@ -95,20 +100,18 @@ class BST{
 			strokeWeight(1);
       textSize(22);
       text(node.key ,x-12, y+7);
-			console.log(node.key);
 			strokeWeight(4);
       this.inorder(node.right, x+spaceFactor, y+65, spaceFactor/2);
     }
-		console.log("New traversal");
   }
 	searchNode(key, node=this.root, x=width/2, y=50, spaceFactor=310){
 		if (node==null) {
-			alert("Not Found");
+			showToast();
 		}else if( node.key === key ){
 			node.x = x;
 			node.y = y;
 			tempNode = node;
-			// alert("Found", key);
+			highlight = true;
 		}else if(key > node.key){
 			return this.searchNode(key, node.right, x+spaceFactor, y+65, spaceFactor/2);
 		}else{
@@ -124,36 +127,39 @@ function setup() {
   
   inputInsert = createInput();
   inputInsert.size(50, 48);
-  inputInsert.position(40, 555);
 
   buttonInsert = createButton('Insert');
-  buttonInsert.position(inputInsert.x + inputInsert.width-5, 555);
 	buttonInsert.addClass('button');
 	buttonInsert.addClass('buttonInsert');
   buttonInsert.mousePressed(insertNode);
   
   inputDel = createInput();
   inputDel.size(50, 48);
-  inputDel.position(250, 555);
   
   buttonDel = createButton('Delete');
-  buttonDel.position(inputDel.x + inputDel.width, 555);
+  buttonDel.position(inputDel.x + inputDel.width );
 	buttonDel.addClass('button');
 	buttonDel.addClass('buttonDel');
   buttonDel.mousePressed(delNode);
+	buttonDel.center('horizontal');
+
+	inputDel.position(buttonDel.x-50);
+
+  buttonInsert.position(buttonDel.x -300);
+	inputInsert.position(buttonInsert.x - 50);
   
   inputSearch= createInput();
   inputSearch.size(50, 48);
-	// inputDel.textSize(32);
-  inputSearch.position(450, 555);
   
   buttonSearch= createButton('Search');
-  buttonSearch.position(inputSearch.x + inputSearch.width, 555);
+  buttonSearch.position(inputSearch.x + inputSearch.width);
 	buttonSearch.addClass('button');
 	buttonSearch.addClass('search');
   buttonSearch.mousePressed(searchNode);
 
-	// background(66, 135, 245);
+  buttonSearch.position(buttonDel.x+300);
+  inputSearch.position(buttonSearch.x-50);
+
 	background(66, 176, 245);
 }
 
@@ -178,18 +184,24 @@ function draw() {
 function insertNode(){
   const val = parseInt(inputInsert.value());
   updated = true;
-  bst.insert(val);
+	if (!isNaN(val)) {
+		bst.insert(val);
+	}
 }
 
 function delNode(){
 	const val = parseInt(inputDel.value());
+	console.log(val);
 	updated = true;
-	bst.deleteNode(val);
+	if (!isNaN(val)) {
+		bst.deleteNode(val);
+	}
 }
 
 function searchNode(){
 	const val = parseInt(inputSearch.value());
 	updated = true;
-	highlight = true;
-	bst.searchNode(val);
+	if (!isNaN(val)) {
+		bst.searchNode(val);
+	}
 }
